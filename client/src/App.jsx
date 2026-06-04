@@ -87,13 +87,11 @@ export default function App() {
       return response.json();
     },
     onSuccess: (data) => {
+      // 1. Notify the user of their safe transaction metrics first
       alert(`🎉 Cashed out successfully!\nCredits Migrated: ${data.amountMoved}\nAccount Total: ${data.accountTotal}`);
-      startTransition(() => {
-        setSessionId(null);
-        setCredits(0);
-        setDisplaySymbols(['-', '-', '-']);
-        setGameState('IDLE');
-      });
+      
+      // 2. AUTOMATIC REFRESH: Instantly spin up a brand new backend session
+      startSessionMutation.mutate();
     },
     onError: (err) => alert(err.message)
   });
