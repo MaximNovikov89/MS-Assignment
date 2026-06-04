@@ -6,13 +6,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = path.join(__dirname, 'sessions.json');
 
 let sessions = new Map();
-let userAccounts = { globalBalance: 0 };
 
 function saveStateToDisk() {
   try {
     const dataToSave = {
-      sessions: Array.from(sessions.entries()),
-      userAccounts
+      sessions: Array.from(sessions.entries())
     };
     fs.writeFileSync(DATA_FILE, JSON.stringify(dataToSave, null, 2), 'utf8');
   } catch (error) {
@@ -26,7 +24,6 @@ function loadStateFromDisk() {
       const fileData = fs.readFileSync(DATA_FILE, 'utf8');
       const parsed = JSON.parse(fileData);
       sessions = new Map(parsed.sessions);
-      userAccounts = parsed.userAccounts || { globalBalance: 0 };
       console.log(`[Repository Active] Successfully restored ${sessions.size} active sessions.`);
     } catch (err) {
       console.error('[Repository Error] Failed to parse backup file, initialization defaulted to clear parameters.', err);
@@ -68,7 +65,6 @@ export default {
     
     session.credits = 0;
     session.status = 'closed';
-    
     session.vaultBalance += amountMoved; 
     
     saveStateToDisk();
@@ -78,4 +74,4 @@ export default {
       accountTotal: session.vaultBalance 
     };
   }
-}; 
+};
