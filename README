@@ -25,3 +25,22 @@ Using TanStack Query for state management.
  
 ---------------------------------------------------------------------------------------------------------------------------------
 
+HOW TO RUN:
+
+This project requires two separate terminal windows running concurrently.
+
+Terminal 1: Backend Server
+↓
+cd server
+npm start
+
+* Runs the API server on http://localhost:5000
+
+
+Terminal 2: Frontend Client
+↓
+cd client
+npm run dev
+
+* Launches the Vite development environment (usually http://localhost:5173).
+---------------------------------------------------------------------------------------------------------------------------------
