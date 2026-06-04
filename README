@@ -1,3 +1,4 @@
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Core Game Logic:
 
@@ -17,5 +18,10 @@ Created the Slot Machine game API
  for the assignment purposes i will use a local JSON file to mock a real DB.
  this will prevent data loss if the server will restart.
 
+---------------------------------------------------------------------------------------------------------------------------------
+
+Created our Client side application using React and VITE.
+Using TanStack Query for state management.
+ 
 ---------------------------------------------------------------------------------------------------------------------------------
 
