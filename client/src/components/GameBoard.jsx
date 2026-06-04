@@ -1,13 +1,13 @@
 import SlotTable from './SlotTable';
 import { styles } from '../styles/slotMachine.styles';
 
-export default function GameBoard({ 
+const GameBoard = ({ 
   credits, 
   displaySymbols, 
   gameState, 
   onRoll, 
   onCashout 
-}) {
+}) => {
   const isLeverDisabled = gameState !== 'IDLE' || credits < 1;
   const isCashoutDisabled = gameState !== 'IDLE';
 
@@ -51,4 +51,6 @@ export default function GameBoard({
       </div>
     </main>
   );
-}
+};
+
+export default GameBoard;

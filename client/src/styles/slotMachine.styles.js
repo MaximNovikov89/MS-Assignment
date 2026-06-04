@@ -113,10 +113,6 @@ export const styles = {
     boxShadow: 'none',
     transform: 'translate(4px, 4px)'
   },
-
-  // =========================================================================
-  // 🎰 NEW ADDITIONS: Neo-Brutalist Pure Modal Elements
-  // =========================================================================
   modalOverlay: {
     position: 'fixed',
     top: 0,
