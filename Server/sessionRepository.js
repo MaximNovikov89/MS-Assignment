@@ -1,17 +1,14 @@
-// server/sessionRepository.js
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const fs = require('fs');
-const path = require('path');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const DATA_FILE = path.join(__dirname, 'sessions.json');
 
-// Encapsulate structural state variables internally
 let sessions = new Map();
 let userAccounts = { globalBalance: 0 };
 
-/**
- * Persists current runtime state to local disk asynchronously
- */
 function saveStateToDisk() {
   try {
     const dataToSave = {
@@ -24,9 +21,6 @@ function saveStateToDisk() {
   }
 }
 
-/**
- * Hydrates state back into running application memory arrays upon initial boot execution
- */
 function loadStateFromDisk() {
   if (fs.existsSync(DATA_FILE)) {
     try {
@@ -41,10 +35,9 @@ function loadStateFromDisk() {
   }
 }
 
-// Automatically trigger hydration immediately when this file is imported
 loadStateFromDisk();
 
-module.exports = {
+export default {
   createSession: (sessionId, startingCredits) => {
     sessions.set(sessionId, {
       credits: startingCredits,

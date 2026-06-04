@@ -1,5 +1,6 @@
 {
   "name": "ms-assignment",
+  "type": "module",
   "private": true,
   "scripts": {
     "start": "node Server/server.js"

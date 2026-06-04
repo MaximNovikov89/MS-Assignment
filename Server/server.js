@@ -1,12 +1,10 @@
-// server/server.js
+import express from 'express';
+import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid';
 
-const express = require('express');
-const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
-
-const { executeRoll } = require('../GameMechanics/gameMechanics');
-const GAME_CONFIG = require('../GameMechanics/constants');
-const sessionRepo = require('./sessionRepository');
+import { executeRoll } from '../GameMechanics/gameMechanics.js';
+import GAME_CONFIG from '../GameMechanics/constants.js';
+import sessionRepo from './sessionRepository.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,9 +12,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: 'http://localhost:5173' })); 
 app.use(express.json());
 
-/**
- * Task: Session initialization
- */
 app.post('/api/session', (req, res) => {
   const sessionId = uuidv4();
   
@@ -28,9 +23,6 @@ app.post('/api/session', (req, res) => {
   });
 });
 
-/**
- * Task: Main Roll Controller
- */
 app.post('/api/roll', (req, res) => {
   const { sessionId } = req.body;
 
@@ -47,11 +39,9 @@ app.post('/api/roll', (req, res) => {
     return res.status(400).json({ error: 'Insufficient credits to perform a roll.' });
   }
 
-  // Deduct token cost and execute core game mechanics
   let currentCredits = session.credits - GAME_CONFIG.COST_PER_ROLL;
   const result = executeRoll(currentCredits);
 
-  // Calculate final wallet outcomes
   let finalCredits = currentCredits + (result.win ? result.reward : 0);
   sessionRepo.updateSessionCredits(sessionId, finalCredits);
 
@@ -63,9 +53,6 @@ app.post('/api/roll', (req, res) => {
   });
 });
 
-/**
- * Task: Cash-out Mechanism
- */
 app.post('/api/cashout', (req, res) => {
   const { sessionId } = req.body;
 
