@@ -1,1 +1,6 @@
 MS Assignment
+
+* Starting with building the game logic. which will be isolated from our application.
+can be used as a microservice and can not be manipulated by any malicious code.
+
+First we build the constant file with main game rules. (GameMechanics/constants.js)
