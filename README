@@ -1,12 +1,27 @@
-MS Assignment
 
-* Starting with building the game logic. which will be isolated from our application.
-can be used as a microservice and can not be manipulated by any malicious code.
+---------------------------------------------------------------------------------------------------------------------------------
+Core Game Logic:
+
+Starting with building the game logic. which will be isolated from our application.
 
 First we build the constant file with main game rules. (GameMechanics/constants.js)
 
---------------------------------------------------------------------------------------------------------------------------------
 Added core game mechanics file. (GameMechanics/GameMechanics.js)
 Created unit test file (UnitTest/gameMechanicsTest.js)
-* the unit test can be stored as separate application i decided to store it in the GameMechanics folder for simplicity purposes.
---------------------------------------------------------------------------------------------------------------------------------
+* the unit test can be stored as separate application. i decided to store it in the GameMechanics folder to keep it simple.
+
+---------------------------------------------------------------------------------------------------------------------------------
+Backend - Sever:
+
+Created the Slot Machine game API
+ a session based server side. in production we can use Redis to store our session data
+ for the assignment purposes i will use a local JSON file to mock a real DB.
+ this will prevent data loss if the server will restart.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Created our Client side application using React and VITE.
+Using TanStack Query for state management.
+ 
+---------------------------------------------------------------------------------------------------------------------------------
+
