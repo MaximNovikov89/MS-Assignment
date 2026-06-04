@@ -42,7 +42,8 @@ export default {
     sessions.set(sessionId, {
       id: sessionId,
       credits: startingCredits,
-      status: 'active'
+      status: 'active',
+      vaultBalance: 0
     });
     saveStateToDisk();
   },
@@ -68,13 +69,13 @@ export default {
     session.credits = 0;
     session.status = 'closed';
     
-    userAccounts.globalBalance += amountMoved;
+    session.vaultBalance += amountMoved; 
     
     saveStateToDisk();
   
     return {
       amountMoved,
-      accountTotal: userAccounts.globalBalance
+      accountTotal: session.vaultBalance 
     };
   }
 }; 
