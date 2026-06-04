@@ -5,5 +5,8 @@ can be used as a microservice and can not be manipulated by any malicious code.
 
 First we build the constant file with main game rules. (GameMechanics/constants.js)
 
+--------------------------------------------------------------------------------------------------------------------------------
 Added core game mechanics file. (GameMechanics/GameMechanics.js)
 Created unit test file (UnitTest/gameMechanicsTest.js)
+* the unit test can be stored as separate application i decided to store it in the GameMechanics folder for simplicity purposes.
+--------------------------------------------------------------------------------------------------------------------------------
