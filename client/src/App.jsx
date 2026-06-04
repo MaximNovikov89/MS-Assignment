@@ -3,7 +3,9 @@ import { useMutation } from '@tanstack/react-query';
 
 import Lobby from './components/Lobby';
 import GameBoard from './components/GameBoard';
-import { SYMBOLS } from '../../server/GameMechanics/constants';
+import * as GAME_CONFIG from '@shared/constants.js';
+const { SYMBOLS } = GAME_CONFIG;
+
 import { styles } from './styles/slotMachine.styles';
 
 const API_BASE_URL = 'http://localhost:5000/api';
