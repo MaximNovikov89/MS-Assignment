@@ -1,13 +1,15 @@
-const { describe, it, beforeEach, afterEach } = require('node:test');
-const assert = require('node:assert/strict');
+import { describe, it, beforeEach, afterEach } from 'node:test';
+import assert from 'node:assert/strict';
 
-const {
+import {
   executeRoll,
   isWinningRoll,
   generateRandomRoll,
-} = require('../GameMechanics/gameMechanics');
+} from '../GameMechanics/gameMechanics.js';
 
-const { SYMBOLS, REWARDS, THRESHOLDS } = require('../GameMechanics/constants');
+import GAME_CONFIG from '../GameMechanics/constants.js';
+
+const { SYMBOLS, REWARDS, THRESHOLDS } = GAME_CONFIG;
 
 describe('isWinningRoll', () => {
   it('returns true when all three symbols match', () => {

@@ -13,8 +13,8 @@ const GAME_CONFIG = {
       HIGH_CHEAT: 60
     },
     CHANCES: {
-      LOW_CHEAT: 0.30,  // 30% chance to re-roll
-      HIGH_CHEAT: 0.60  // 60% chance to re-roll
+      LOW_CHEAT_CHANCE: 0.30,  // 30% chance to re-roll
+      HIGH_CHEAT_CHANCE: 0.60  // 60% chance to re-roll
     }
   };
   
@@ -25,4 +25,4 @@ const GAME_CONFIG = {
   Object.freeze(GAME_CONFIG.THRESHOLDS);
   Object.freeze(GAME_CONFIG.CHANCES);
   
-  module.exports = GAME_CONFIG;
+  export default GAME_CONFIG;
