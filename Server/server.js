@@ -32,7 +32,11 @@ app.post('/api/roll', (req, res) => {
 
   const session = sessionRepo.getSession(sessionId);
   if (!session) {
-    return res.status(404).json({ error: 'Session not found or has been closed.' });
+    return res.status(404).json({ error: 'Session not found.' });
+  }
+
+  if (session.status === 'closed') {
+    return res.status(403).json({ error: 'This session has been closed. Please start a new game.' });
   }
 
   if (session.credits < GAME_CONFIG.COST_PER_ROLL) {
@@ -60,9 +64,18 @@ app.post('/api/cashout', (req, res) => {
     return res.status(400).json({ error: 'Missing sessionId token parameter.' });
   }
 
+  const session = sessionRepo.getSession(sessionId);
+  if (!session) {
+    return res.status(404).json({ error: 'Session not found.' });
+  }
+
+  if (session.status === 'closed') {
+    return res.status(400).json({ error: 'This session has already been cashed out and closed.' });
+  }
+
   const cashoutDetails = sessionRepo.cashoutSession(sessionId);
   if (!cashoutDetails) {
-    return res.status(404).json({ error: 'No active session found matching this token.' });
+    return res.status(500).json({ error: 'Failed to process cashout.' });
   }
 
   res.json({

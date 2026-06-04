@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const DATA_FILE = path.join(__dirname, 'sessions.json');
 
 let sessions = new Map();
@@ -12,7 +11,7 @@ let userAccounts = { globalBalance: 0 };
 function saveStateToDisk() {
   try {
     const dataToSave = {
-      sessions: Array.from(sessions.entries()), // Serialize Map into standard JSON array formats
+      sessions: Array.from(sessions.entries()),
       userAccounts
     };
     fs.writeFileSync(DATA_FILE, JSON.stringify(dataToSave, null, 2), 'utf8');
@@ -38,19 +37,21 @@ function loadStateFromDisk() {
 loadStateFromDisk();
 
 export default {
-  createSession: (sessionId, startingCredits) => {
+
+  createSession(sessionId, startingCredits) {
     sessions.set(sessionId, {
+      id: sessionId,
       credits: startingCredits,
-      createdAt: new Date()
+      status: 'active'
     });
     saveStateToDisk();
   },
 
-  getSession: (sessionId) => {
-    return sessions.get(sessionId);
+  getSession(sessionId) {
+    return sessions.get(sessionId) || null;
   },
 
-  updateSessionCredits: (sessionId, newCredits) => {
+  updateSessionCredits(sessionId, newCredits) {
     const session = sessions.get(sessionId);
     if (session) {
       session.credits = newCredits;
@@ -58,18 +59,22 @@ export default {
     }
   },
 
-  cashoutSession: (sessionId) => {
+  cashoutSession(sessionId) {
     const session = sessions.get(sessionId);
-    if (!session) return null;
-
-    const finalCredits = session.credits;
-    userAccounts.globalBalance += finalCredits;
-    sessions.delete(sessionId);
+    if (!session || session.status === 'closed') return null;
+  
+    const amountMoved = session.credits;
+    
+    session.credits = 0;
+    session.status = 'closed';
+    
+    userAccounts.globalBalance += amountMoved;
+    
     saveStateToDisk();
-
+  
     return {
-      amountMoved: finalCredits,
+      amountMoved,
       accountTotal: userAccounts.globalBalance
     };
   }
-};
+}; 
