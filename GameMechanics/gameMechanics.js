@@ -1,4 +1,4 @@
-const GAME_CONFIG = require('./constants');
+import GAME_CONFIG from './constants.js';
 
 const { SYMBOLS, THRESHOLDS, CHANCES, REWARDS } = GAME_CONFIG;
 
@@ -25,7 +25,7 @@ function generateRandomRoll() {
   
     // Destructure thresholds and chances for cleaner inline math evaluation
     const { LOW_CHEAT: lowThreshold, HIGH_CHEAT: highThreshold } = THRESHOLDS;
-    const { LOW_CHEAT: lowChance, HIGH_CHEAT: highChance } = CHANCES;
+    const { LOW_CHEAT_CHANCE: lowChance, HIGH_CHEAT_CHANCE: highChance } = CHANCES;
   
     // Determine the house's intervention probability based on the user's current credit brackets
     let cheatChance = 0;
@@ -51,7 +51,7 @@ function generateRandomRoll() {
     };
   }
   
-  module.exports = {
+  export {
     executeRoll,
     isWinningRoll,
     generateRandomRoll
