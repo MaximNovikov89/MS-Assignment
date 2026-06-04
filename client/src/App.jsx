@@ -7,6 +7,7 @@ import * as GAME_CONFIG from '@shared/constants.js';
 const { SYMBOLS } = GAME_CONFIG;
 
 import { styles } from './styles/slotMachine.styles';
+import CashoutModal from './components/CashoutModal';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -15,6 +16,7 @@ export default function App() {
   const [credits, setCredits] = useState(0);
   const [displaySymbols, setDisplaySymbols] = useState(['-', '-', '-']);
   const [gameState, setGameState] = useState('IDLE');
+  const [cashoutSummary, setCashoutSummary] = useState(null);
 
   const [isPending, startTransition] = useTransition();
 
@@ -87,10 +89,8 @@ export default function App() {
       return response.json();
     },
     onSuccess: (data) => {
-      // 1. Notify the user of their safe transaction metrics first
-      alert(`🎉 Cashed out successfully!\nCredits Migrated: ${data.amountMoved}\nAccount Total: ${data.accountTotal}`);
-      
-      // 2. AUTOMATIC REFRESH: Instantly spin up a brand new backend session
+      setCashoutSummary(data);
+
       startSessionMutation.mutate();
     },
     onError: (err) => alert(err.message)
@@ -131,6 +131,11 @@ export default function App() {
           onCashout={() => cashoutMutation.mutate()}
         />
       )}
+
+      <CashoutModal
+        data={cashoutSummary} 
+        onClose={() => setCashoutSummary(null)} 
+      />
     </div>
   );
 }
