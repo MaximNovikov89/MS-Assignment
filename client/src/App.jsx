@@ -1,4 +1,4 @@
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import Lobby from './components/Lobby';
@@ -18,8 +18,9 @@ export default function App() {
   const [gameState, setGameState] = useState('IDLE');
   const [cashoutSummary, setCashoutSummary] = useState(null);
 
-  const [isPending, startTransition] = useTransition();
-
+  // ==========================================
+  // START SESSION MUTATION
+  // ==========================================
   const startSessionMutation = useMutation({
     mutationFn: async () => {
       const response = await fetch(`${API_BASE_URL}/session`, { method: 'POST' });
@@ -27,16 +28,17 @@ export default function App() {
       return response.json();
     },
     onSuccess: (data) => {
-      startTransition(() => {
-        setSessionId(data.sessionId);
-        setCredits(data.credits);
-        setDisplaySymbols(['-', '-', '-']);
-        setGameState('IDLE');
-      });
+      setSessionId(data.sessionId);
+      setCredits(data.credits);
+      setDisplaySymbols(['-', '-', '-']);
+      setGameState('IDLE');
     },
     onError: (err) => alert(err.message)
   });
 
+  // ==========================================
+  // ROLL MUTATION
+  // ==========================================
   const rollMutation = useMutation({
     mutationFn: async () => {
       const response = await fetch(`${API_BASE_URL}/roll`, {
@@ -78,6 +80,9 @@ export default function App() {
     }
   });
 
+  // ==========================================
+  // CASHOUT MUTATION
+  // ==========================================
   const cashoutMutation = useMutation({
     mutationFn: async () => {
       const response = await fetch(`${API_BASE_URL}/cashout`, {
@@ -90,12 +95,15 @@ export default function App() {
     },
     onSuccess: (data) => {
       setCashoutSummary(data);
-
-      startSessionMutation.mutate();
+      setSessionId(null);
+      setCredits(0);
+      setGameState('IDLE');
+      setDisplaySymbols(['-', '-', '-']);
     },
     onError: (err) => alert(err.message)
   });
 
+  // Reel spinning text animation runner
   useEffect(() => {
     let animationInterval;
     if (gameState === 'SPINNING') {
@@ -120,7 +128,7 @@ export default function App() {
       {!sessionId ? (
         <Lobby 
           onStartSession={() => startSessionMutation.mutate()} 
-          isPending={startSessionMutation.isPending || isPending} 
+          isPending={startSessionMutation.isPending} 
         />
       ) : (
         <GameBoard
@@ -132,6 +140,7 @@ export default function App() {
         />
       )}
 
+      {/* Modern Pop-up Overlay container */}
       <CashoutModal
         data={cashoutSummary} 
         onClose={() => setCashoutSummary(null)} 
