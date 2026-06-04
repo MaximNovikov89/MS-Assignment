@@ -1,6 +1,7 @@
+import SpinningX from '../styles/Animations/SpinningX';
 import { styles } from '../styles/slotMachine.styles';
 
-export default function SlotTable({ displaySymbols }) {
+const SlotTable = ({ displaySymbols }) => {
   return (
     <table style={styles.table}>
       <tbody>
@@ -8,7 +9,7 @@ export default function SlotTable({ displaySymbols }) {
           {displaySymbols.map((symbol, index) => (
             <td key={index} style={styles.slotBlock}>
               <div style={styles.symbolWrapper}>
-                {symbol}
+                {symbol === 'X' ? <SpinningX /> : symbol}
               </div>
             </td>
           ))}
@@ -16,4 +17,6 @@ export default function SlotTable({ displaySymbols }) {
       </tbody>
     </table>
   );
-}
+};
+
+export default SlotTable;

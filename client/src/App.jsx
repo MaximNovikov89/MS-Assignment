@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import Lobby from './components/Lobby';
 import GameBoard from './components/GameBoard';
-import * as GAME_CONFIG from '@shared/constants.js';
-const { SYMBOLS } = GAME_CONFIG;
 
 import { styles } from './styles/slotMachine.styles';
 import CashoutModal from './components/CashoutModal';
@@ -103,21 +101,6 @@ export default function App() {
     onError: (err) => alert(err.message)
   });
 
-  // Reel spinning text animation runner
-  useEffect(() => {
-    let animationInterval;
-    if (gameState === 'SPINNING') {
-      animationInterval = setInterval(() => {
-        setDisplaySymbols([
-          SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-          SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-          SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-        ]);
-      }, 70); 
-    }
-    return () => clearInterval(animationInterval);
-  }, [gameState]);
-
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -140,7 +123,6 @@ export default function App() {
         />
       )}
 
-      {/* Modern Pop-up Overlay container */}
       <CashoutModal
         data={cashoutSummary} 
         onClose={() => setCashoutSummary(null)} 

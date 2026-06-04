@@ -1,7 +1,7 @@
 import React from 'react';
 import { styles } from '../styles/slotMachine.styles'; 
 
-export default function CashoutModal({ data, onClose }) {
+const CashoutModal = ({ data, onClose }) => {
   if (!data) return null;
 
   return (
@@ -34,4 +34,6 @@ export default function CashoutModal({ data, onClose }) {
       </div>
     </div>
   );
-}
+};
+
+export default CashoutModal;
