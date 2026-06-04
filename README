@@ -1,1 +1,8 @@
-MS Assignment
+Created the Slot Machine game API
+ a session based server side. in production we can use Redis to store our session data
+ for the assignment purposes i will use a local JSON file to mock a real DB.
+ this will prevent data loss if the server will restart.
+
+The game API is located in server.js
+The session management will be located in sessionRepository.js
+
